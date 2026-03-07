@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Đăng nhập - Quản lý sinh viên</title>
+
+    <!-- CSS -->
+    <link href="admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="admin/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="admin/css/templatemo-tiya-golf-club.css" rel="stylesheet">
+</head>
+
+<body style="background:#3D405B;">
+
+<div class="container d-flex justify-content-center align-items-center" style="height:100vh;">
+
+    <div class="card p-4 shadow" style="width:400px;">
+        
+        <h3 class="text-center mb-4">ĐĂNG NHẬP</h3>
+
+        <form action="login" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Tên đăng nhập</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input">
+                <label class="form-check-label">Ghi nhớ đăng nhập</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Đăng nhập
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="admin/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
