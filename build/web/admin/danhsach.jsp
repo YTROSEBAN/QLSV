@@ -1,11 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList, model.HocSinh, model.TaiKhoan"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.HocSinh"%>
 
 <%@include file="layout/header.jsp"%>
 <%@include file="layout/sidebar.jsp"%>
 
 <div id="layoutSidenav_content">
 <main>
+
 <div class="container-fluid px-4">
 
 <h1 class="mt-4">QUẢN LÝ SINH VIÊN</h1>
@@ -13,7 +15,7 @@
 <div class="card mb-4">
 
 <div class="card-header">
-<i class="fas fa-table me-1"></i>
+
 Danh sách sinh viên
 
 <div class="mt-3">
@@ -27,17 +29,16 @@ Thêm sinh viên
 
 <div class="card-body">
 
-<table class="table table-bordered" id="datatablesSimple">
+<table class="table table-bordered">
 
 <thead>
 <tr>
 <th>Mã sinh viên</th>
-<th>Tên sinh viên</th>
+<th>Họ tên</th>
 <th>Ngày sinh</th>
 <th>Giới tính</th>
 <th>Địa chỉ</th>
-<th>Hình ảnh</th>
-<th>Tài khoản</th>
+<th>Mã lớp</th>
 <th>Hành động</th>
 </tr>
 </thead>
@@ -45,58 +46,36 @@ Thêm sinh viên
 <tbody>
 
 <%
-ArrayList<HocSinh> ds =
-(ArrayList<HocSinh>)request.getAttribute("ds");
+ArrayList<HocSinh> ds = (ArrayList<HocSinh>) request.getAttribute("ds");
 
-ArrayList<TaiKhoan> tks =
-(ArrayList<TaiKhoan>)request.getAttribute("dsTK");
+if(ds != null && ds.size() > 0){
 
 for(HocSinh hs : ds){
 %>
 
 <tr>
 
-<td><%=hs.getMa()%></td>
-<td><%=hs.getTen()%></td>
-<td><%=hs.getNgaySinh()%></td>
-<td><%=hs.getGioiTinh()%></td>
-<td><%=hs.getDiaChi()%></td>
+<td><%= hs.getMaSV() %></td>
+<td><%= hs.getHoTen() %></td>
+<td><%= hs.getNgaySinh() %></td>
 
 <td>
-<img src="<%=request.getContextPath()%>/images/<%=hs.getHinhAnh()%>" width="60">
+<%= hs.getGioiTinh() == 1 ? "Nam" : "Nữ" %>
 </td>
 
-<td>
-
-<%
-for(TaiKhoan tk : tks){
-
-boolean selected =
-hs.getTaiKhoan_ID().equals(String.valueOf(tk.getID()));
-
-if(selected){
-%>
-
-Tài khoản: <%=tk.getTenTaiKhoan()%>
-<br>
-Quyền: <%=tk.getQuyen()%>
-
-<%
-}
-}
-%>
-
-</td>
+<td><%= hs.getDiaChi() %></td>
+<td><%= hs.getMaLop() %></td>
 
 <td>
 
-<a href="<%=request.getContextPath()%>/hocsinh?action=edit&id=<%=hs.getID()%>"
+<a href="<%=request.getContextPath()%>/hocsinh?action=edit&MaSV=<%=hs.getMaSV()%>"
 class="btn btn-info btn-sm">
 Sửa
 </a>
 
-<a href="<%=request.getContextPath()%>/hocsinh?action=delete&id=<%=hs.getID()%>"
-class="btn btn-danger btn-sm">
+<a href="<%=request.getContextPath()%>/hocsinh?action=delete&MaSV=<%=hs.getMaSV()%>"
+class="btn btn-danger btn-sm"
+onclick="return confirm('Bạn có chắc muốn xóa không?')">
 Xóa
 </a>
 
@@ -104,7 +83,21 @@ Xóa
 
 </tr>
 
-<% } %>
+<%
+}
+
+}else{
+%>
+
+<tr>
+<td colspan="7" style="text-align:center;">
+Không có dữ liệu
+</td>
+</tr>
+
+<%
+}
+%>
 
 </tbody>
 
@@ -113,6 +106,7 @@ Xóa
 </div>
 </div>
 </div>
+
 </main>
 </div>
 

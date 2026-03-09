@@ -24,11 +24,11 @@
                     <div class="card-body">
                         <form action="<%=request.getContextPath()%>/hocsinh" method="post" enctype="multipart/form-data">
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="ma" value="${hs.getMa()}" required type="text" name="ma" placeholder="Mã học sinh" />
+                                <input class="form-control" id="ma" value="${hs.getMaSV()}" required type="text" name="ma" placeholder="Mã học sinh" />
                                 <label for="ma">Mã học sinh</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" id="ten" value="${hs.getTen()}" required type="text" name="ten" placeholder="Tên học sinh" />
+                                <input class="form-control" id="ten" value="${hs.getHoTen()}" required type="text" name="ten" placeholder="Tên học sinh" />
                                 <label for="ten">Tên học sinh</label>
                             </div>
                             <div class="form-floating mb-3">
