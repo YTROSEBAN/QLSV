@@ -17,16 +17,24 @@
                     <div class="sb-sidenav-menu-heading">Danh sách</div>
                     <a class="nav-link" href="<%=request.getContextPath()%>/taikhoan">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                        kết quả học tập
+                        Tài Khoản
                     </a>
                     <a class="nav-link" href="<%=request.getContextPath()%>/hocsinh">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Học sinh
+                        Sinh Viên
                     </a>
                         
                     <a class="nav-link" href="<%=request.getContextPath()%>/diem">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                        Điểm
+                        Kết Qủa
+                    </a>
+                        <a class="nav-link" href="<%=request.getContextPath()%>/diem">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Lớp
+                    </a>
+                        <a class="nav-link" href="<%=request.getContextPath()%>/diem">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Khoa
                     </a>
                 </div>
             </div>

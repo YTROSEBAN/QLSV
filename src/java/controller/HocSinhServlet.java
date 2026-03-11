@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import model.HocSinh;
 import util.JsonUtil;
 
-@WebServlet(name = "HocSinhServlet", urlPatterns = {"/hocsinh"})
+@WebServlet("/hocsinh")
 public class HocSinhServlet extends HttpServlet {
 
     @Override
@@ -21,20 +20,24 @@ public class HocSinhServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
-        String id = request.getParameter("id");
+        String MaSV = request.getParameter("MaSV");
 
-        // DELETE
-        if ("delete".equals(action) && id != null) {
+        // ========================
+        // XÓA SINH VIÊN
+        // ========================
+        if ("delete".equals(action) && MaSV != null) {
 
-            ApiClient.deleteHocSinh(Integer.parseInt(id));
+            ApiClient.deleteSinhVien(Integer.parseInt(MaSV));
             response.sendRedirect("hocsinh");
             return;
         }
 
-        // EDIT PAGE
-        if ("edit".equals(action) && id != null) {
+        // ========================
+        // TRANG SỬA
+        // ========================
+        if ("edit".equals(action) && MaSV != null) {
 
-            String json = ApiClient.getHocSinhByID(id);
+            String json = ApiClient.getSinhVienByID(MaSV);
 
             ArrayList<HocSinh> ds = JsonUtil.parseHocSinh(json);
 
@@ -47,7 +50,9 @@ public class HocSinhServlet extends HttpServlet {
             return;
         }
 
-        // ADD PAGE
+        // ========================
+        // TRANG THÊM
+        // ========================
         if ("add".equals(action)) {
 
             request.getRequestDispatcher("admin/themhocsinh.jsp")
@@ -55,8 +60,10 @@ public class HocSinhServlet extends HttpServlet {
             return;
         }
 
-        // LIST
-        String json = ApiClient.getAllHocSinh();
+        // ========================
+        // DANH SÁCH SINH VIÊN
+        // ========================
+        String json = ApiClient.getAllSinhVien();
 
         ArrayList<HocSinh> ds = JsonUtil.parseHocSinh(json);
 
@@ -74,28 +81,19 @@ public class HocSinhServlet extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        
-        String MaSV = request.getParameter("MaSV");
         String HoTen = request.getParameter("HoTen");
         String NgaySinh = request.getParameter("NgaySinh");
-        int GioiTinh = Integer.parseInt(request.getParameter("GioiTinh"));
         String DiaChi = request.getParameter("DiaChi");
+
+        int GioiTinh = Integer.parseInt(request.getParameter("GioiTinh"));
         int MaLop = Integer.parseInt(request.getParameter("MaLop"));
-   
 
-
-System.out.println("MaSV: " + MaSV);
-System.out.println("HoTen: " + HoTen);
-System.out.println("NgaySinh: " + NgaySinh);
-System.out.println("GioiTinh: " + GioiTinh);
-System.out.println("DiaChi: " + DiaChi);
-System.out.println("MaLop: " + MaLop);
-
-        // ADD
+        // ========================
+        // THÊM SINH VIÊN
+        // ========================
         if ("add".equals(action)) {
 
-            ApiClient.createHocSinh(
-                    MaSV,
+            ApiClient.createSinhVien(
                     HoTen,
                     NgaySinh,
                     GioiTinh,
@@ -103,13 +101,15 @@ System.out.println("MaLop: " + MaLop);
                     MaLop
             );
         }
-        Object id = null;
 
-        // UPDATE
-        if ("edit".equals(action) && id != null) {
+        // ========================
+        // CẬP NHẬT SINH VIÊN
+        // ========================
+        if ("edit".equals(action)) {
 
-            ApiClient.updateHocSinh(
-                    Integer.parseInt((String) id),
+            int MaSV = Integer.parseInt(request.getParameter("MaSV"));
+
+            ApiClient.updateSinhVien(
                     MaSV,
                     HoTen,
                     NgaySinh,

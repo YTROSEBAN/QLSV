@@ -3,6 +3,7 @@ package util;
 import java.util.ArrayList;
 import model.HocSinh;
 import model.TaiKhoan;
+import model.Diem;
 
 public class JsonUtil {
 
@@ -15,9 +16,12 @@ public class JsonUtil {
 
         if (json == null || json.isEmpty()) return list;
 
-        if (json.contains("\"data\":[")) {
+        try {
 
-            json = getDataArray(json);
+            // Nếu JSON có "data"
+            if (json.contains("\"data\":[")) {
+                json = getDataArray(json);
+            }
 
             String[] objects = json.substring(1, json.length() - 1).split("\\},\\{");
 
@@ -25,61 +29,19 @@ public class JsonUtil {
 
                 obj = cleanObject(obj);
 
-                String maStr = getValue(obj, "MaSV");
-                int ma = maStr.isEmpty() ? 0 : Integer.parseInt(maStr);
+                int masv = Integer.parseInt(getValue(obj, "MaSV"));
+                String hoten = decodeUnicode(getValue(obj, "HoTen"));
+                String ngaysinh = getValue(obj, "NgaySinh");
+                int gioitinh = Integer.parseInt(getValue(obj, "GioiTinh"));
+                String diachi = decodeUnicode(getValue(obj, "DiaChi"));
+                int malop = Integer.parseInt(getValue(obj, "MaLop"));
+                String hinhanh = getValue(obj, "HinhAnh");
 
-                String ten = decodeUnicode(getValue(obj, "HoTen"));
-                String ngaySinh = getValue(obj, "NgaySinh");
-                String diaChi = decodeUnicode(getValue(obj, "DiaChi"));
-
-                String maLopStr = getValue(obj, "MaLop");
-                int maLop = maLopStr.isEmpty() ? 0 : Integer.parseInt(maLopStr);
-
-                String gioiTinhStr = getValue(obj, "GioiTinh");
-                int gioiTinh = gioiTinhStr.isEmpty() ? 0 : Integer.parseInt(gioiTinhStr);
-
-                String hinhAnh = getValue(obj, "HinhAnh");
-
-                list.add(new HocSinh(
-                        ma,
-                        ten,
-                        ngaySinh,
-                        gioiTinh,
-                        diaChi,
-                        maLop,
-                        hinhAnh
-                ));
+                list.add(new HocSinh(masv, hoten, ngaysinh, gioitinh, diachi, malop, hinhanh));
             }
 
-        } else {
-
-            json = getDataObject(json);
-            json = cleanObject(json);
-
-            String maStr = getValue(json, "MaSV");
-            int ma = maStr.isEmpty() ? 0 : Integer.parseInt(maStr);
-
-            String ten = decodeUnicode(getValue(json, "HoTen"));
-            String ngaySinh = getValue(json, "NgaySinh");
-            String diaChi = decodeUnicode(getValue(json, "DiaChi"));
-
-            String maLopStr = getValue(json, "MaLop");
-            int maLop = maLopStr.isEmpty() ? 0 : Integer.parseInt(maLopStr);
-
-            String gioiTinhStr = getValue(json, "GioiTinh");
-            int gioiTinh = gioiTinhStr.isEmpty() ? 0 : Integer.parseInt(gioiTinhStr);
-
-            String hinhAnh = getValue(json, "HinhAnh");
-
-            list.add(new HocSinh(
-                    ma,
-                    ten,
-                    ngaySinh,
-                    gioiTinh,
-                    diaChi,
-                    maLop,
-                    hinhAnh
-            ));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return list;
@@ -94,9 +56,11 @@ public class JsonUtil {
 
         if (json == null || json.isEmpty()) return list;
 
-        if (json.contains("\"data\":[")) {
+        try {
 
-            json = getDataArray(json);
+            if (json.contains("\"data\":[")) {
+                json = getDataArray(json);
+            }
 
             String[] objects = json.substring(1, json.length() - 1).split("\\},\\{");
 
@@ -105,13 +69,51 @@ public class JsonUtil {
                 obj = cleanObject(obj);
 
                 String id = getValue(obj, "id");
-                String username = getValue(obj, "TenTaiKhoan");
-                String password = getValue(obj, "MatKhau");
+                String user = decodeUnicode(getValue(obj, "TenTaiKhoan"));
+                String pass = getValue(obj, "MatKhau");
                 String quyen = getValue(obj, "Quyen");
-                String trangThai = getValue(obj, "TrangThai");
+                String trangthai = getValue(obj, "TrangThai");
 
-                list.add(new TaiKhoan(id, username, password, quyen, trangThai));
+                list.add(new TaiKhoan(id, user, pass, quyen, trangthai));
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    // ===============================
+    // PARSE DIEM
+    // ===============================
+    public static ArrayList<Diem> parseDiem(String json) {
+
+        ArrayList<Diem> list = new ArrayList<>();
+
+        if (json == null || json.isEmpty()) return list;
+
+        try {
+
+            if (json.contains("\"data\":[")) {
+                json = getDataArray(json);
+            }
+
+            String[] objects = json.substring(1, json.length() - 1).split("\\},\\{");
+
+            for (String obj : objects) {
+
+                obj = cleanObject(obj);
+
+                int masv = Integer.parseInt(getValue(obj, "MaSV"));
+                String monhoc = decodeUnicode(getValue(obj, "MonHoc"));
+                float diem = Float.parseFloat(getValue(obj, "Diem"));
+
+                list.add(new Diem(masv, monhoc, diem));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return list;
@@ -120,7 +122,6 @@ public class JsonUtil {
     // ===============================
     // JSON HELPER
     // ===============================
-
     private static String getValue(String json, String key) {
 
         String search = "\"" + key + "\":";
@@ -140,9 +141,7 @@ public class JsonUtil {
 
             int end = json.indexOf(",", start);
 
-            if (end == -1) {
-                end = json.indexOf("}", start);
-            }
+            if (end == -1) end = json.indexOf("}", start);
 
             return json.substring(start, end);
         }
@@ -158,26 +157,40 @@ public class JsonUtil {
 
     private static String cleanObject(String json) {
 
-        if (!json.startsWith("{")) {
-            json = "{" + json;
-        }
-
-        if (!json.endsWith("}")) {
-            json = json + "}";
-        }
+        if (!json.startsWith("{")) json = "{" + json;
+        if (!json.endsWith("}")) json = json + "}";
 
         return json;
     }
 
-    private static String getDataObject(String json) {
-
-        int start = json.indexOf("{", json.indexOf("data"));
-        int end = json.lastIndexOf("}");
-
-        return json.substring(start, end + 1);
-    }
-
+    // ===============================
+    // DECODE UNICODE
+    // ===============================
     private static String decodeUnicode(String text) {
-        return text;
+
+        if (text == null) return "";
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < text.length(); i++) {
+
+            if (text.charAt(i) == '\\' && i + 5 < text.length() && text.charAt(i + 1) == 'u') {
+
+                String hex = text.substring(i + 2, i + 6);
+
+                try {
+                    int code = Integer.parseInt(hex, 16);
+                    sb.append((char) code);
+                    i += 5;
+                } catch (Exception e) {
+                    sb.append(text.charAt(i));
+                }
+
+            } else {
+                sb.append(text.charAt(i));
+            }
+        }
+
+        return sb.toString();
     }
 }
