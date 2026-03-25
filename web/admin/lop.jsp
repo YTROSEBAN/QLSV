@@ -1,11 +1,5 @@
-<%-- 
-    Document   : danhsach
-    Created on : Jan 21, 2026
-    Author     : DEV-PC
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList, model.TaiKhoan"%>
+<%@page import="java.util.ArrayList, model.Lop"%>
 
 <%@include file="layout/header.jsp"%>
 <%@include file="layout/sidebar.jsp"%>
@@ -23,12 +17,12 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <div>
                             <i class="fas fa-table me-1"></i>
-                            Danh sách tài khoản
+                            Danh sách lớp
                         </div>
 
                         <a class="btn btn-primary"
-                           href="<%=request.getContextPath()%>/admin/themtaikhoan.jsp">
-                            Thêm tài khoản
+                           href="<%=request.getContextPath()%>/admin/themlop.jsp">
+                            Thêm lớp
                         </a>
                     </div>
 
@@ -38,46 +32,40 @@
 
                             <thead>
                                 <tr>
-                                    <th>Tên tài khoản</th>
-                                    <th>Mã SV</th>
-                                    <th>Quyền</th>
-                                    <th>Trạng thái</th>
+                                    <th>Mã lớp</th>
+                                    <th>Tên lớp</th>
+                                    <th>Mã khoa</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
 
                             <tbody>
 <%
-ArrayList<TaiKhoan> ds = (ArrayList<TaiKhoan>)request.getAttribute("ds");
+ArrayList<Lop> ds = (ArrayList<Lop>)request.getAttribute("dsLop");
 
 if(ds != null && !ds.isEmpty()){
-    for(TaiKhoan tk : ds){
+    for(Lop l : ds){
 %>
 
                                 <tr>
-                                    <td><%= tk.getTenDangNhap() %></td>
-                                    <td><%= tk.getMaSV() %></td>
-                                    <td><%= tk.getQuyen() %></td>
-
-                                    <!-- Trạng thái -->
-                                    <td>
-                                        <span class="badge bg-success">Hoạt động</span>
-                                    </td>
+                                    <td><%= l.getMaLop() %></td>
+                                    <td><%= l.getTenLop() %></td>
+                                    <td><%= l.getMaKhoa() %></td>
 
                                     <!-- Hành động -->
                                     <td>
                                         <div class="btn-group">
 
                                             <!-- Sửa -->
-                                            <a href="<%=request.getContextPath()%>/taikhoan?action=edit&TenDangNhap=<%=tk.getTenDangNhap()%>"
+                                            <a href="<%=request.getContextPath()%>/lop?action=edit&MaLop=<%=l.getMaLop()%>"
                                                class="btn btn-sm btn-warning">
                                                Sửa
                                             </a>
 
                                             <!-- Xóa -->
-                                            <a href="<%=request.getContextPath()%>/taikhoan?action=delete&TenDangNhap=<%=tk.getTenDangNhap()%>"
+                                            <a href="<%=request.getContextPath()%>/lop?action=delete&MaLop=<%=l.getMaLop()%>"
                                                class="btn btn-sm btn-danger"
-                                               onclick="return confirm('Bạn chắc chắn muốn xóa tài khoản này?');">
+                                               onclick="return confirm('Bạn chắc chắn muốn xóa lớp này?');">
                                                Xóa
                                             </a>
 
@@ -90,7 +78,7 @@ if(ds != null && !ds.isEmpty()){
 } else {
 %>
                                 <tr>
-                                    <td colspan="5" class="text-center">
+                                    <td colspan="4" class="text-center">
                                         Không có dữ liệu
                                     </td>
                                 </tr>

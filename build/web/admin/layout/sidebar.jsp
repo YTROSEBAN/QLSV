@@ -28,11 +28,11 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Kết Qủa
                     </a>
-                        <a class="nav-link" href="<%=request.getContextPath()%>/diem">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/lop">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Lớp
                     </a>
-                        <a class="nav-link" href="<%=request.getContextPath()%>/diem">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/khoa">
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Khoa
                     </a>

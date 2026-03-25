@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import model.HocSinh;
 import model.TaiKhoan;
 import model.Diem;
+import model.Khoa;
+import model.Lop;
 
 public class JsonUtil {
 
@@ -18,7 +20,6 @@ public class JsonUtil {
 
         try {
 
-            // Nếu JSON có "data"
             if (json.contains("\"data\":[")) {
                 json = getDataArray(json);
             }
@@ -68,13 +69,18 @@ public class JsonUtil {
 
                 obj = cleanObject(obj);
 
-                String id = getValue(obj, "id");
-                String user = decodeUnicode(getValue(obj, "TenTaiKhoan"));
+                String username = decodeUnicode(getValue(obj, "TenDangNhap"));
                 String pass = getValue(obj, "MatKhau");
                 String quyen = getValue(obj, "Quyen");
-                String trangthai = getValue(obj, "TrangThai");
 
-                list.add(new TaiKhoan(id, user, pass, quyen, trangthai));
+                int masv = 0;
+                try {
+                    masv = Integer.parseInt(getValue(obj, "MaSV"));
+                } catch (Exception e) {
+                    masv = 0;
+                }
+
+                list.add(new TaiKhoan(username, pass, quyen, masv));
             }
 
         } catch (Exception e) {
@@ -110,6 +116,40 @@ public class JsonUtil {
                 float diem = Float.parseFloat(getValue(obj, "Diem"));
 
                 list.add(new Diem(masv, monhoc, diem));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    // ===============================
+    // PARSE KHOA
+    // ===============================
+    public static ArrayList<Khoa> parseKhoa(String json) {
+
+        ArrayList<Khoa> list = new ArrayList<>();
+
+        if (json == null || json.isEmpty()) return list;
+
+        try {
+
+            if (json.contains("\"data\":[")) {
+                json = getDataArray(json);
+            }
+
+            String[] objects = json.substring(1, json.length() - 1).split("\\},\\{");
+
+            for (String obj : objects) {
+
+                obj = cleanObject(obj);
+
+                int makhoa = Integer.parseInt(getValue(obj, "MaKhoa"));
+                String tenkhoa = decodeUnicode(getValue(obj, "TenKhoa"));
+
+                list.add(new Khoa(makhoa, tenkhoa));
             }
 
         } catch (Exception e) {
@@ -193,4 +233,36 @@ public class JsonUtil {
 
         return sb.toString();
     }
+
+    public static ArrayList<Lop> parseLop(String json) {
+
+    ArrayList<Lop> list = new ArrayList<>();
+
+    if (json == null || json.isEmpty()) return list;
+
+    try {
+
+        if (json.contains("\"data\":[")) {
+            json = getDataArray(json);
+        }
+
+        String[] objects = json.substring(1, json.length() - 1).split("\\},\\{");
+
+        for (String obj : objects) {
+
+            obj = cleanObject(obj);
+
+            int malop = Integer.parseInt(getValue(obj, "MaLop"));
+            String tenlop = decodeUnicode(getValue(obj, "TenLop"));
+            int makhoa = Integer.parseInt(getValue(obj, "MaKhoa"));
+
+            list.add(new Lop(malop, tenlop, makhoa));
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return list;
+}
 }

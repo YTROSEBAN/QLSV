@@ -32,6 +32,7 @@ public class ApiClient {
                 conn.setDoOutput(true);
             }
 
+            // gửi JSON
             if (jsonInput != null) {
 
                 OutputStream os = conn.getOutputStream();
@@ -69,6 +70,7 @@ public class ApiClient {
     // ================================
     // TAIKHOAN CRUD
     // ================================
+
     public static String getAllTaiKhoan() {
         return callAPI("GET", "taikhoan", null);
     }
@@ -77,76 +79,40 @@ public class ApiClient {
         return callAPI("GET", "taikhoan&id=" + id, null);
     }
 
-    public static String createTaiKhoan(String ten, String pass, String quyen, String trangThai) {
+    public static String createTaiKhoan(String TenDangNhap, String MatKhau, String Quyen, int MaSV) {
 
-        String json = String.format(
-                "{\"TenTaiKhoan\":\"%s\",\"MatKhau\":\"%s\",\"Quyen\":\"%s\",\"TrangThai\":\"%s\"}",
-                ten, pass, quyen, trangThai
-        );
+    String json = String.format(
+            "{\"TenDangNhap\":\"%s\",\"MatKhau\":\"%s\",\"Quyen\":\"%s\",\"MaSV\":%d}",
+            TenDangNhap, MatKhau, Quyen, MaSV
+    );
 
-        return callAPI("POST", "taikhoan", json);
-    }
+    return callAPI("POST", "taikhoan", json);
+}
 
-    public static String updateTaiKhoan(int id, String ten, String pass, String quyen, String trangThai) {
+    public static String updateTaiKhoan(String TenDangNhap, String MatKhau, String Quyen, int MaSV) {
 
-        String json = String.format(
-                "{\"ID\":%d,\"TenTaiKhoan\":\"%s\",\"MatKhau\":\"%s\",\"Quyen\":\"%s\",\"TrangThai\":\"%s\"}",
-                id, ten, pass, quyen, trangThai
-        );
+    String json = String.format(
+            "{\"TenDangNhap\":\"%s\",\"MatKhau\":\"%s\",\"Quyen\":\"%s\",\"MaSV\":%d}",
+            TenDangNhap, MatKhau, Quyen, MaSV
+    );
 
-        return callAPI("PUT", "taikhoan", json);
-    }
+    return callAPI("PUT", "taikhoan", json);
+}
 
-    public static String deleteTaiKhoan(int id) {
+   public static String deleteTaiKhoan(String TenDangNhap) {
 
-        String json = "{\"ID\":" + id + "}";
+    String json = String.format(
+            "{\"TenDangNhap\":\"%s\"}",
+            TenDangNhap
+    );
 
-        return callAPI("DELETE", "taikhoan", json);
-    }
-
-    // ================================
-    // HOCSINH CRUD
-    // ================================
-    public static String getAllHocSinh() {
-        return callAPI("GET", "hocsinh", null);
-    }
-
-    public static String getHocSinhByID(String id) {
-        return callAPI("GET", "hocsinh&id=" + id, null);
-    }
-
-    public static String createHocSinh(String HoTen,
-            String NgaySinh, int GioiTinh, String DiaChi, int MaLop) {
-
-        String json = String.format(
-                "{\"HoTen\":\"%s\",\"NgaySinh\":\"%s\",\"GioiTinh\":%d,\"DiaChi\":\"%s\",\"MaLop\":%d}",
-                HoTen, NgaySinh, GioiTinh, DiaChi, MaLop
-        );
-
-        return callAPI("POST", "hocsinh", json);
-    }
-
-    public static String updateHocSinh(int id, String HoTen,
-            String NgaySinh, int GioiTinh, String DiaChi, int MaLop) {
-
-        String json = String.format(
-                "{\"ID\":%d,\"HoTen\":\"%s\",\"NgaySinh\":\"%s\",\"GioiTinh\":%d,\"DiaChi\":\"%s\",\"MaLop\":%d}",
-                id, HoTen, NgaySinh, GioiTinh, DiaChi, MaLop
-        );
-
-        return callAPI("PUT", "hocsinh", json);
-    }
-
-    public static String deleteHocSinh(int id) {
-
-        String json = "{\"ID\":" + id + "}";
-
-        return callAPI("DELETE", "hocsinh", json);
-    }
+    return callAPI("DELETE", "taikhoan", json);
+}
 
     // ================================
     // SINHVIEN CRUD
     // ================================
+
     public static String getAllSinhVien() {
         return callAPI("GET", "sinhvien", null);
     }
@@ -155,31 +121,31 @@ public class ApiClient {
         return callAPI("GET", "sinhvien&id=" + id, null);
     }
 
-    public static String createSinhVien(String HoTen,
+    public static String createSinhVien(int MaSV, String HoTen,
             String NgaySinh, int GioiTinh, String DiaChi, int MaLop) {
 
         String json = String.format(
-                "{\"HoTen\":\"%s\",\"NgaySinh\":\"%s\",\"GioiTinh\":%d,\"DiaChi\":\"%s\",\"MaLop\":%d}",
-                HoTen, NgaySinh, GioiTinh, DiaChi, MaLop
+                "{\"MaSV\":%d,\"HoTen\":\"%s\",\"NgaySinh\":\"%s\",\"GioiTinh\":%d,\"DiaChi\":\"%s\",\"MaLop\":%d}",
+                MaSV, HoTen, NgaySinh, GioiTinh, DiaChi, MaLop
         );
 
         return callAPI("POST", "sinhvien", json);
     }
 
-    public static String updateSinhVien(int id, String HoTen,
-            String NgaySinh, int GioiTinh, String DiaChi, int MaLop) {
+    public static String updateSinhVien(String HoTen, String NgaySinh, int MaSV, String DiaChi, int GioiTinh, int MaLop) {
 
         String json = String.format(
-                "{\"ID\":%d,\"HoTen\":\"%s\",\"NgaySinh\":\"%s\",\"GioiTinh\":%d,\"DiaChi\":\"%s\",\"MaLop\":%d}",
-                id, HoTen, NgaySinh, GioiTinh, DiaChi, MaLop
+                "{\"MaSV\":%d,\"HoTen\":\"%s\",\"NgaySinh\":\"%s\",\"GioiTinh\":%d,\"DiaChi\":\"%s\",\"MaLop\":%d}",
+                MaSV, HoTen, NgaySinh, GioiTinh, DiaChi, MaLop
         );
 
         return callAPI("PUT", "sinhvien", json);
     }
 
-    public static String deleteSinhVien(int id) {
+    // SỬA LẠI DELETE
+    public static String deleteSinhVien(int MaSV) {
 
-        String json = "{\"ID\":" + id + "}";
+        String json = "{\"MaSV\":" + MaSV + "}";
 
         return callAPI("DELETE", "sinhvien", json);
     }
@@ -187,6 +153,7 @@ public class ApiClient {
     // ================================
     // DIEM CRUD
     // ================================
+
     public static String getAllDiem() {
         return callAPI("GET", "ketqua", null);
     }
@@ -227,4 +194,87 @@ public class ApiClient {
         return callAPI("DELETE", "ketqua", json);
     }
 
+    // TẠM THỜI (để không crash)
+static String getAllHocSinh() {
+    return getAllSinhVien(); 
+}
+    
+// ================================
+// KHOA CRUD
+// ================================
+
+public static String getAllKhoa() {
+    return callAPI("GET", "khoa", null);
+}
+
+public static String getKhoaById(int MaKhoa) {
+
+    return callAPI("GET", "khoa&MaKhoa=" + MaKhoa, null);
+}
+
+public static String createKhoa(int MaKhoa, String TenKhoa) {
+
+    String json = String.format(
+            "{\"MaKhoa\":%d,\"TenKhoa\":\"%s\"}",
+            MaKhoa, TenKhoa
+    );
+
+    return callAPI("POST", "khoa", json);
+}
+
+public static String updateKhoa(int MaKhoa, String TenKhoa) {
+
+    String json = String.format(
+            "{\"MaKhoa\":%d,\"TenKhoa\":\"%s\"}",
+            MaKhoa, TenKhoa
+    );
+
+    return callAPI("PUT", "khoa", json);
+}
+
+public static String deleteKhoa(int MaKhoa) {
+
+    String json = "{\"MaKhoa\":" + MaKhoa + "}";
+
+    return callAPI("DELETE", "khoa", json);
+}
+
+    // ================================
+// LOP CRUD
+// ================================
+
+public static String getAllLop() {
+    return callAPI("GET", "lop", null);
+}
+
+public static String getLopByID(String MaLop) {
+    return callAPI("GET", "lop&MaLop=" + MaLop, null);
+}
+
+public static String createLop(String TenLop, int MaKhoa) {
+
+    String json = String.format(
+            "{\"TenLop\":\"%s\",\"MaKhoa\":%d}",
+            TenLop, MaKhoa
+    );
+
+    return callAPI("POST", "lop", json);
+}
+
+public static String updateLop(int MaLop, String TenLop, int MaKhoa) {
+
+    String json = String.format(
+            "{\"MaLop\":%d,\"TenLop\":\"%s\",\"MaKhoa\":%d}",
+            MaLop, TenLop, MaKhoa
+    );
+
+    return callAPI("PUT", "lop", json);
+}
+
+public static String deleteLop(int MaLop) {
+
+    String json = "{\"MaLop\":" + MaLop + "}";
+
+    return callAPI("DELETE", "lop", json);
+}
 }

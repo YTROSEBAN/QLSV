@@ -28,10 +28,7 @@
 
 
 </div>
-<div class="form-floating mb-3">
-<input class="form-control" id="masv" required type="text" name="MaSV" placeholder="MaSV" />
-<label for="monhoc">Mã Sinh Viên</label>
-</div>
+
 
 <div class="form-floating mb-3">
 <input class="form-control" id="monhoc" required type="text" name="MonHoc" placeholder="Môn học" />
@@ -46,9 +43,8 @@
 <!-- Học sinh -->
 <div class="form-floating mb-3">
 
-<select name="MaSV" class="form-control">
-
-<option value="">-- Chọn học sinh --</option>
+<select name="MaSV" class="form-control" required>
+    <option value="" disabled selected>-- Chọn học sinh --</option>
 
 <%
 ArrayList<HocSinh> ds = (ArrayList<HocSinh>)request.getAttribute("dsHS");

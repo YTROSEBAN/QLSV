@@ -29,7 +29,7 @@ public class HocSinhServlet extends HttpServlet {
 
             ApiClient.deleteSinhVien(Integer.parseInt(MaSV));
             response.sendRedirect("hocsinh");
-            return;
+            return; 
         }
 
         // ========================
@@ -81,43 +81,47 @@ public class HocSinhServlet extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        String HoTen = request.getParameter("HoTen");
-        String NgaySinh = request.getParameter("NgaySinh");
-        String DiaChi = request.getParameter("DiaChi");
+int MaSV = Integer.parseInt(request.getParameter("MaSV"));
+String HoTen = request.getParameter("HoTen");
+String NgaySinh = request.getParameter("NgaySinh");
+String DiaChi = request.getParameter("DiaChi");
+int GioiTinh = Integer.parseInt(request.getParameter("GioiTinh"));
+int MaLop = Integer.parseInt(request.getParameter("MaLop"));
 
-        int GioiTinh = Integer.parseInt(request.getParameter("GioiTinh"));
-        int MaLop = Integer.parseInt(request.getParameter("MaLop"));
 
-        // ========================
-        // THÊM SINH VIÊN
-        // ========================
-        if ("add".equals(action)) {
+// ========================
+// THÊM SINH VIÊN
+// ========================
+if ("add".equals(action)) {
 
-            ApiClient.createSinhVien(
-                    HoTen,
-                    NgaySinh,
-                    GioiTinh,
-                    DiaChi,
-                    MaLop
-            );
-        }
+    ApiClient.createSinhVien(
+            MaSV,
+            HoTen,
+            NgaySinh,
+            GioiTinh,
+            DiaChi,
+            MaLop
+    );
+}
 
-        // ========================
-        // CẬP NHẬT SINH VIÊN
-        // ========================
-        if ("edit".equals(action)) {
 
-            int MaSV = Integer.parseInt(request.getParameter("MaSV"));
+// ========================
+// SỬA SINH VIÊN
+// ========================
+if ("edit".equals(action)) {
 
-            ApiClient.updateSinhVien(
-                    MaSV,
-                    HoTen,
-                    NgaySinh,
-                    GioiTinh,
-                    DiaChi,
-                    MaLop
-            );
-        }
+
+    ApiClient.updateSinhVien(
+            
+            HoTen,
+            NgaySinh,
+            MaSV,
+            DiaChi,
+            GioiTinh,
+            MaLop
+    );
+}
+
 
         response.sendRedirect("hocsinh");
     }

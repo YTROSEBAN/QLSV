@@ -4,6 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Laptop%20Computer%20BMT/Documents/GitHub/cit2431/QLSV/src/java/controller/HocSinhServlet.java</file>
+            <file>file:/C:/Users/Laptop%20Computer%20BMT/Documents/GitHub/cit2431/QLSV/src/java/controller/ApiClient.java</file>
+            <file>file:/C:/Users/Laptop%20Computer%20BMT/Documents/GitHub/cit2431/QLSV/web/admin/Khoa.jsp</file>
+            <file>file:/C:/Users/Laptop%20Computer%20BMT/Documents/GitHub/cit2431/QLSV/web/admin/danhsach.jsp</file>
+            <file>file:/C:/Users/Laptop%20Computer%20BMT/Documents/GitHub/cit2431/QLSV/src/java/model/Khoa.java</file>
+            <file>file:/C:/Users/Laptop%20Computer%20BMT/Documents/GitHub/cit2431/QLSV/src/java/controller/KhoaServlet.java</file>
+            <file>file:/C:/Users/Laptop%20Computer%20BMT/Documents/GitHub/cit2431/QLSV/src/java/model/HocSinh.java</file>
         </group>
     </open-files>
 </project-private>

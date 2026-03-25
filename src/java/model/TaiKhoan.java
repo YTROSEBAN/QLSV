@@ -1,35 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author DEV-PC
- */
 public class TaiKhoan {
-    public String id;
-    public String TenTaiKhoan;
-    public String MatKhau;
-    public String Quyen;
-    public String TrangThai;
-    public TaiKhoan(String id, String TenTaiKhoan, String MatKhau, String Quyen, String TrangThai){
-        this.id = id;
-        this.TenTaiKhoan = TenTaiKhoan;
+
+    private String TenDangNhap;
+    private String MatKhau;
+    private String Quyen;
+    private int MaSV;
+
+    public TaiKhoan(String TenDangNhap, String MatKhau, String Quyen, int MaSV) {
+        this.TenDangNhap = TenDangNhap;
         this.MatKhau = MatKhau;
         this.Quyen = Quyen;
-        this.TrangThai = TrangThai;
+        this.MaSV = MaSV;
     }
-    public String getTenTaiKhoan(){return TenTaiKhoan;}
-    public String getMatKhau(){return MatKhau;}
-    public String getQuyen(){return Quyen;}
-    public String getTrangThai(){return TrangThai;}
-    public String getID(){return id;}
-    
-    public void setTenTaiKhoan(String TenTaiKhoan){this.TenTaiKhoan = TenTaiKhoan;}
-    public void setMatKhau(String MatKhau){this.MatKhau = MatKhau;}
-    public void setQuyen(String Quyen){this.Quyen = Quyen;}
-    public void setTrangThai(String TrangThai){this.TrangThai = TrangThai;}
-    public void setID(String id){this.id = id;}
+
+    public String getTenDangNhap() {
+        return TenDangNhap;
+    }
+
+    public void setTenDangNhap(String TenDangNhap) {
+        this.TenDangNhap = TenDangNhap;
+    }
+
+    public String getMatKhau() {
+        return MatKhau;
+    }
+
+    public void setMatKhau(String MatKhau) {
+        this.MatKhau = MatKhau;
+    }
+
+    public String getQuyen() {
+        return Quyen;
+    }
+
+    public void setQuyen(String Quyen) {
+        this.Quyen = Quyen;
+    }
+
+    public int getMaSV() {
+        return MaSV;
+    }
+
+    public void setMaSV(int MaSV) {
+        this.MaSV = MaSV;
+    }
 }

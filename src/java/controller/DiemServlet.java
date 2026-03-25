@@ -18,6 +18,8 @@ public class DiemServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+
         String action = request.getParameter("action");
         String masv = request.getParameter("MaSV");
         String monhoc = request.getParameter("MonHoc");
@@ -34,13 +36,24 @@ public class DiemServlet extends HttpServlet {
         // ===== TRANG SỬA =====
         if ("edit".equals(action) && masv != null && monhoc != null) {
 
-            String json = ApiClient.getDiemByKey(Integer.parseInt(masv), monhoc);
+            int m = Integer.parseInt(masv);
+
+            String json = ApiClient.getDiemByKey(m, monhoc);
 
             ArrayList<Diem> ds = JsonUtil.parseDiem(json);
 
-            if (!ds.isEmpty()) {
-                request.setAttribute("diem", ds.get(0));
+            Diem diemChon = null;
+
+            if (ds != null) {
+                for (Diem d : ds) {
+                    if (d.getMaSV() == m && d.getMonHoc().equals(monhoc)) {
+                        diemChon = d;
+                        break;
+                    }
+                }
             }
+
+            request.setAttribute("diem", diemChon);
 
             request.getRequestDispatcher("admin/suadiem.jsp")
                     .forward(request, response);
@@ -50,12 +63,10 @@ public class DiemServlet extends HttpServlet {
         // ===== TRANG THÊM =====
         if ("add".equals(action)) {
 
-            // Lấy danh sách học sinh từ API
             String jsonHS = ApiClient.getAllHocSinh();
 
             ArrayList<HocSinh> dsHS = JsonUtil.parseHocSinh(jsonHS);
 
-            // gửi sang JSP
             request.setAttribute("dsHS", dsHS);
 
             request.getRequestDispatcher("admin/themdiem.jsp")
@@ -84,18 +95,16 @@ public class DiemServlet extends HttpServlet {
 
         int masv = Integer.parseInt(request.getParameter("MaSV"));
         String monhoc = request.getParameter("MonHoc");
-        float diem = Float.parseFloat(request.getParameter("Diem"));
+        double diem = Double.parseDouble(request.getParameter("Diem"));
 
         // ===== THÊM =====
         if ("add".equals(action)) {
-
-            ApiClient.createDiem(masv, monhoc, diem);
+            ApiClient.createDiem(masv, monhoc, (float) diem);
         }
 
         // ===== SỬA =====
         if ("edit".equals(action)) {
-
-            ApiClient.updateDiem(masv, monhoc, diem);
+            ApiClient.updateDiem(masv, monhoc, (float) diem);
         }
 
         response.sendRedirect("diem");

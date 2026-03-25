@@ -1,30 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package util;
 
 import java.security.MessageDigest;
-import java.util.Base64;
-/**
- *
- * @author DEV-PC
- */
+
 public class PasswordUtil {
+
     public static String hashPassword(String password) {
 
         try {
 
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-
+            MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] hash = md.digest(password.getBytes("UTF-8"));
 
-            return Base64.getEncoder().encodeToString(hash);
+            StringBuilder sb = new StringBuilder();
+
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b));
+            }
+
+            return sb.toString();
 
         } catch (Exception e) {
-
-            throw new RuntimeException(e);
-
+            return null;
         }
     }
 }

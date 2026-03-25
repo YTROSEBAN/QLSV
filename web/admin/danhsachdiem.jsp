@@ -1,9 +1,11 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Diem"%>
 
 <%@include file="layout/header.jsp"%>
 <%@include file="layout/sidebar.jsp"%>
+<%@page import="java.net.URLEncoder"%>
 
 <div id="layoutSidenav_content">
 <main>
@@ -65,12 +67,12 @@ for(Diem d : ds){
 
 <div class="btn-group">
 
-<a href="<%=request.getContextPath()%>/diem?action=edit&masv=<%=d.getMaSV()%>"
+<a href="<%=request.getContextPath()%>/diem?action=edit&MaSV=<%=d.getMaSV()%>&MonHoc=<%=URLEncoder.encode(d.getMonHoc(), "UTF-8")%>"
 class="btn btn-sm btn-warning">
 Sửa
 </a>
 
-<a href="<%=request.getContextPath()%>/diem?action=delete&masv=<%=d.getMaSV()%>"
+<a href="<%=request.getContextPath()%>/diem?action=delete&MaSV=<%=d.getMaSV()%>&MonHoc=<%=URLEncoder.encode(d.getMonHoc(), "UTF-8")%>"
 class="btn btn-sm btn-danger"
 onclick="return confirm('Bạn chắc chắn muốn xóa điểm này?');">
 Xóa
